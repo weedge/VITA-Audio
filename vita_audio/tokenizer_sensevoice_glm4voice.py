@@ -137,8 +137,10 @@ class SenseVoiceGLM4VoiceTokenizer:
                     self.device))
             self.feature_extractor = WhisperFeatureExtractor.from_pretrained(
                 self.glm4_voice_tokenizer_model_path)
+            logger.info(f"{self.device=} Loading GLM4VoiceTokenizer Done")
 
         if self.flow_path is not None:
+            logger.info(f"{self.device=} Loading GLM4VoiceDecoder")
             flow_config = os.path.join(self.flow_path, "config.yaml")
             flow_checkpoint = os.path.join(self.flow_path, "flow.pt")
             hift_checkpoint = os.path.join(self.flow_path, "hift.pt")
@@ -150,7 +152,7 @@ class SenseVoiceGLM4VoiceTokenizer:
                 hift_ckpt_path=hift_checkpoint,
                 device=self.device,
             )
-        logger.info(f"{self.device=} Loading GLM4VoiceTokenizer Done")
+            logger.info(f"{self.device=} Loading GLM4VoiceDecoder Done")
 
     def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
         assert not (is_discrete and is_contiguous)
