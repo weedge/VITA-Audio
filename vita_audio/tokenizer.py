@@ -50,63 +50,81 @@ def update_tokenizer_for_s2s(tokenizer, model_type):
         return update_tokenizer(tokenizer)
 
     if model_type == "glm4voice":
-        from .tokenizer_glm4voice import update_tokenizer_for_glm4voice, GLM4VoiceTokenizer
+        from .tokenizer_glm4voice import update_tokenizer_for_glm4voice
         return update_tokenizer_for_glm4voice(tokenizer)
 
     if model_type == "cosyvoice2":
-        from .tokenizer_cosyvoice2 import update_tokenizer_for_cosyvoice2, CosyVoice2Tokenizer
+        from .tokenizer_cosyvoice2 import update_tokenizer_for_cosyvoice2
         return update_tokenizer_for_cosyvoice2(tokenizer)
 
     if model_type == "snac24khz":
-        from .tokenizer_snac import update_tokenizer_for_snac, SNACTokenizer
+        from .tokenizer_snac import update_tokenizer_for_snac
         return update_tokenizer_for_snac(tokenizer)
 
     if model_type == "sensevoice_sparktts":
         from .tokenizer_sensevoice_sparktts import (
             update_tokenizer_for_sensevoice_sparktts,
-            SenseVoiceSparkTTSTokenizer,
         )
         return update_tokenizer_for_sensevoice_sparktts(tokenizer)
 
     if model_type == "sensevoice_glm4voice":
         from .tokenizer_sensevoice_glm4voice import (
             update_tokenizer_for_sensevoice_glm4voice,
-            SenseVoiceGLM4VoiceTokenizer,
         )
         return update_tokenizer_for_sensevoice_glm4voice(tokenizer)
 
     raise NotImplementedError
 
 
-def get_audio_tokenizer(model_name_or_path, model_type, flow_path=None, rank=None):
+def get_audio_tokenizer(model_name_or_path, model_type, flow_path=None, rank=None, **kwargs):
 
     if model_type is None:
         return None
 
     if model_type == "glm4voice":
-        from .tokenizer_glm4voice import update_tokenizer_for_glm4voice, GLM4VoiceTokenizer
+        from .tokenizer_glm4voice import GLM4VoiceTokenizer
         return GLM4VoiceTokenizer(model_name_or_path, flow_path=flow_path, rank=rank)
 
     if model_type == "cosyvoice2":
-        from .tokenizer_cosyvoice2 import update_tokenizer_for_cosyvoice2, CosyVoice2Tokenizer
+        from .tokenizer_cosyvoice2 import CosyVoice2Tokenizer
         return CosyVoice2Tokenizer(model_name_or_path, rank=rank)
 
     if model_type == "snac24khz":
-        from .tokenizer_snac import update_tokenizer_for_snac, SNACTokenizer
+        from .tokenizer_snac import SNACTokenizer
         return SNACTokenizer(model_name_or_path, rank=rank)
 
     if model_type == "sensevoice_sparktts":
         from .tokenizer_sensevoice_sparktts import (
-            update_tokenizer_for_sensevoice_sparktts,
             SenseVoiceSparkTTSTokenizer,
         )
-        return SenseVoiceSparkTTSTokenizer(model_name_or_path, rank=rank)
+        spark_tts_model_path = kwargs.get(
+            "sense_voice_model_path",
+            model_name_or_path,
+        )
+        sense_voice_model_path = kwargs.get(
+            "sense_voice_model_path",
+            "FunAudioLLM/SenseVoiceSmall",
+        )
+        return SenseVoiceSparkTTSTokenizer(
+            spark_tts_model_path=spark_tts_model_path,
+            sense_voice_model_path=sense_voice_model_path,
+            rank=rank,
+        )
 
     if model_type == "sensevoice_glm4voice":
         from .tokenizer_sensevoice_glm4voice import (
-            update_tokenizer_for_sensevoice_glm4voice,
             SenseVoiceGLM4VoiceTokenizer,
         )
-        return SenseVoiceGLM4VoiceTokenizer(model_name_or_path, flow_path=flow_path, rank=rank)
+
+        sense_voice_model_path = kwargs.get(
+            "sense_voice_model_path",
+            "FunAudioLLM/SenseVoiceSmall",
+        )
+        return SenseVoiceGLM4VoiceTokenizer(
+            glm4_voice_tokenizer_model_path=model_name_or_path,
+            sense_voice_model_path=sense_voice_model_path,
+            flow_path=flow_path,
+            rank=rank,
+        )
 
     raise NotImplementedError
