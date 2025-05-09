@@ -34,7 +34,7 @@ torch_dtype = torch.bfloat16
 
 
 if True:
-# if False:
+    # if False:
     # sensevoice glm4voice tokenizer
     sys.path.append("third_party/GLM-4-Voice/")
     sys.path.append("third_party/GLM-4-Voice/cosyvoice/")
@@ -103,20 +103,20 @@ class TextAudioIteratorStreamer(TextIteratorStreamer):
 
         # After the symbol for a new line, we flush the cache.
         if text.endswith("\n"):
-            printable_text = text[self.print_len :]
+            printable_text = text[self.print_len:]
             self.token_cache = []
             self.print_len = 0
         # If the last token is a CJK character, we print the characters.
         elif len(text) > 0 and self._is_chinese_char(ord(text[-1])):
-            printable_text = text[self.print_len :]
+            printable_text = text[self.print_len:]
             self.print_len += len(printable_text)
         elif self.token_cache[-1] >= self.audio_offset:
-            printable_text = text[self.print_len :]
+            printable_text = text[self.print_len:]
             self.print_len += len(printable_text)
         # Otherwise, prints until the last space char (simple heuristic to avoid printing incomplete words,
         # which may change with the subsequent token -- there are probably smarter ways to do this!)
         else:
-            printable_text = text[self.print_len : text.rfind(" ") + 1]
+            printable_text = text[self.print_len: text.rfind(" ") + 1]
             self.print_len += len(printable_text)
 
         self.on_finalized_text(printable_text)
@@ -189,7 +189,12 @@ def custom_init_weights(module):
 
 class S2SInference:
     def __init__(
-        self, model_name_or_path, audio_tokenizer_path, audio_tokenizer_type, flow_path=None
+        self,
+        model_name_or_path,
+        audio_tokenizer_path,
+        audio_tokenizer_type,
+        flow_path=None,
+        **kwargs,
     ):
 
         config = AutoConfig.from_pretrained(
@@ -485,7 +490,8 @@ class S2SInference:
         else:
             system_message = self.default_system_message
 
-        if prompt_audio_path is not None and self.audio_tokenizer.apply_to_role("user", is_discrete=True):
+        if prompt_audio_path is not None and self.audio_tokenizer.apply_to_role(
+                "user", is_discrete=True):
             # discrete codec
             audio_tokens = self.audio_tokenizer.encode(prompt_audio_path)
             audio_tokens = "".join(f"<|audio_{i}|>" for i in audio_tokens)
@@ -523,8 +529,7 @@ class S2SInference:
         )
 
         if (audio_path is not None or prompt_audio_path is not None) and self.audio_tokenizer.apply_to_role(
-            "user", is_contiguous=True
-        ):
+                "user", is_contiguous=True):
             # contiguous codec
             audio_paths = []
             if audio_path is not None:
@@ -607,7 +612,8 @@ class S2SInference:
         else:
             system_message = self.default_system_message
 
-        if prompt_audio_path is not None and self.audio_tokenizer.apply_to_role("user", is_discrete=True):
+        if prompt_audio_path is not None and self.audio_tokenizer.apply_to_role(
+                "user", is_discrete=True):
             # discrete codec
             audio_tokens = self.audio_tokenizer.encode(prompt_audio_path)
             audio_tokens = "".join(f"<|audio_{i}|>" for i in audio_tokens)
@@ -645,8 +651,7 @@ class S2SInference:
         )
 
         if (audio_path is not None or prompt_audio_path is not None) and self.audio_tokenizer.apply_to_role(
-            "user", is_contiguous=True
-        ):
+                "user", is_contiguous=True):
             # contiguous codec
             audio_paths = []
             if audio_path is not None:
