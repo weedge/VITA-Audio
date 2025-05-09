@@ -76,8 +76,13 @@ def update_tokenizer_for_s2s(tokenizer, model_type):
     raise NotImplementedError
 
 
-def get_audio_tokenizer(model_name_or_path, model_type, flow_path=None, rank=None, **kwargs):
-
+def get_audio_tokenizer(
+    model_name_or_path=None,
+    model_type=None,
+    flow_path=None,
+    rank=None,
+    **kwargs,
+):
     if model_type is None:
         return None
 
