@@ -153,9 +153,6 @@ class SenseVoiceGLM4VoiceTokenizer:
         logger.info(f"{self.device=} Loading GLM4VoiceTokenizer Done")
 
     def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
-        if not hasattr(self, "whisper_model"):
-            self.load_model()
-
         assert not (is_discrete and is_contiguous)
         assert is_discrete or is_contiguous
 
@@ -194,9 +191,6 @@ class SenseVoiceGLM4VoiceTokenizer:
             return speech
 
     def decode(self, audio_tokens, option_steps=10, **kwargs):
-        if not hasattr(self, "whisper_model"):
-            self.load_model()
-
         this_uuid = str(uuid.uuid4())
         this_uuid = "abc"
 

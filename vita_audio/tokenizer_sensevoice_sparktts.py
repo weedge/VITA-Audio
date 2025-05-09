@@ -108,7 +108,7 @@ class SenseVoiceSparkTTSTokenizer:
         if self.sense_voice_model_path is not None:
             from funasr.models.sense_voice.model import SenseVoiceSmall
             logger.info("Loading SenseVoiceSmall")
-            _, self.kwargs = SenseVoiceSmall.from_pretrained(
+            self.sensevoice_model, self.kwargs = SenseVoiceSmall.from_pretrained(
                 model=self.sense_voice_model_path, device=self.device)
             logger.info("Loading SenseVoiceSmall Done")
 
@@ -124,9 +124,6 @@ class SenseVoiceSparkTTSTokenizer:
             logger.info("Loading BiCodecTokenizer Done")
 
     def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
-        if not hasattr(self, "model"):
-            self.load_model()
-
         assert not (is_discrete and is_contiguous)
         assert is_discrete or is_contiguous
 
@@ -158,9 +155,6 @@ class SenseVoiceSparkTTSTokenizer:
             return speech
 
     def decode(self, prompt_speech_token, source_speech_16k=None):
-        if not hasattr(self, "model"):
-            self.load_model()
-
         semantic_token_ids = torch.tensor(prompt_speech_token, dtype=torch.long).unsqueeze(0)
         # print(f"{semantic_token_ids=}")
 
