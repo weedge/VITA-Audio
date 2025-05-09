@@ -68,8 +68,14 @@ def update_tokenizer_for_sensevoice_sparktts(tokenizer):
 
 
 class SenseVoiceSparkTTSTokenizer:
-    def __init__(self, model_name_or_path, rank=None):
-        self.model_name_or_path = model_name_or_path
+    def __init__(
+        self,
+        spark_tts_model_path=None,
+        sense_voice_model_path=None,
+        rank=None,
+    ):
+        self.spark_tts_model_path = spark_tts_model_path
+        self.sense_voice_model_path = sense_voice_model_path
 
         if rank is None and torch.distributed.is_initialized():
             rank = torch.distributed.get_rank()
@@ -99,22 +105,23 @@ class SenseVoiceSparkTTSTokenizer:
             self.device = "cpu"
         logger.info(f"{self.device=}")
 
-        logger.info("Loading SenseVoiceSmall")
-        from funasr.models.sense_voice.model import SenseVoiceSmall
+        if self.sense_voice_model_path is not None:
+            from funasr.models.sense_voice.model import SenseVoiceSmall
+            logger.info("Loading SenseVoiceSmall")
+            _, self.kwargs = SenseVoiceSmall.from_pretrained(
+                model=self.sense_voice_model_path, device=self.device)
+            logger.info("Loading SenseVoiceSmall Done")
 
-        model_dir = "/data/models/FunAudioLLM/SenseVoiceSmall/"
-        _, self.kwargs = SenseVoiceSmall.from_pretrained(model=model_dir, device=self.device)
-        logger.info("Loading SenseVoiceSmall Done")
+        if self.spark_tts_model_path is not None:
+            from sparktts.models.audio_tokenizer import BiCodecTokenizer
+            logger.info("Loading BiCodecTokenizer")
 
-        logger.info("Loading BiCodecTokenizer")
-        from sparktts.models.audio_tokenizer import BiCodecTokenizer
-
-        model_dir = "/data/models/SparkAudio/Spark-TTS-0.5B/"
-        # import time
-        # import random
-        # time.sleep(self.rank * 2 + random.randint(3, 9))
-        self.model = BiCodecTokenizer(model_dir, device=self.device)
-        logger.info("Loading BiCodecTokenizer Done")
+            model_dir = "/data/models/SparkAudio/Spark-TTS-0.5B/"
+            # import time
+            # import random
+            # time.sleep(self.rank * 2 + random.randint(3, 9))
+            self.model = BiCodecTokenizer(model_dir, device=self.device)
+            logger.info("Loading BiCodecTokenizer Done")
 
     def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
         if not hasattr(self, "model"):
@@ -130,7 +137,7 @@ class SenseVoiceSparkTTSTokenizer:
             return semantic_token_ids
 
         if is_contiguous:
-            from funasr.utils.load_utils import load_audio_text_image_video, extract_fbank
+            from funasr.utils.load_utils import extract_fbank
 
             audio, sampling_rate = torchaudio.load(audio_path)
             audio = audio.mean(0)
