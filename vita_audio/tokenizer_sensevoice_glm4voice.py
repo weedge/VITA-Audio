@@ -125,8 +125,8 @@ class SenseVoiceGLM4VoiceTokenizer:
 
         if self.sense_voice_model_path is not None:
             logger.info(f"{self.device=} Loading SenseVoiceSmall")
-            model_dir = self.sense_voice_model_path
-            _, self.kwargs = SenseVoiceSmall.from_pretrained(model=model_dir, device=self.device)
+            self.sensevoice_model, self.kwargs = SenseVoiceSmall.from_pretrained(
+                model=self.sense_voice_model_path, device=self.device)
             logger.info(f"{self.device=} Loading SenseVoiceSmall Done")
 
         if self.glm4_voice_tokenizer_model_path is not None:
