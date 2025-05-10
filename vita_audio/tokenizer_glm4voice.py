@@ -102,9 +102,6 @@ class GLM4VoiceTokenizer:
         # self.text_audio_interval_ratio = text_audio_interval_ratio
 
     def load_model(self):
-        if hasattr(self, "whisper_model"):
-            return
-
         if self.rank is not None:
             self.device = f"cuda:{self.rank}"
             torch.cuda.set_device(self.rank)
@@ -137,9 +134,6 @@ class GLM4VoiceTokenizer:
             logger.info(f"{self.device=} Loading GLM4VoiceDecoder Done")
 
     def encode(self, audio_path, **kwargs):
-        if not hasattr(self, "whisper_model"):
-            self.load_model()
-
         audio_tokens = extract_speech_token(
             self.whisper_model, self.feature_extractor, [audio_path], device=self.device
         )[0]
@@ -147,9 +141,6 @@ class GLM4VoiceTokenizer:
         return audio_tokens
 
     def decode(self, audio_tokens, option_steps=10, **kwargs):
-        if not hasattr(self, "whisper_model"):
-            self.load_model()
-
         this_uuid = str(uuid.uuid4())
         this_uuid = "abc"
 

@@ -85,9 +85,6 @@ class SNACTokenizer:
         self.text_audio_interval_ratio = text_audio_interval_ratio
 
     def load_model(self):
-        if hasattr(self, "model"):
-            return
-
         logger.info("Loading SNACTokenizer")
         from snac import SNAC
 
@@ -97,9 +94,6 @@ class SNACTokenizer:
         self.model = SNAC.from_pretrained(self.model_name_or_path).eval().to(self.device)
 
     def encode(self, audio_path, **kwargs):
-        if not hasattr(self, "model"):
-            self.load_model()
-
         audio, sampling_rate = torchaudio.load(audio_path)
         audio = torchaudio.transforms.Resample(
             orig_freq=sampling_rate, new_freq=self.model.sampling_rate
@@ -116,9 +110,6 @@ class SNACTokenizer:
         return audio_tokens
 
     def decode(self, audio_tokens, **kwargs):
-        if not hasattr(self, "model"):
-            self.load_model()
-
         while len(audio_tokens) % sum(self.model.vq_strides):
             audio_tokens += [
                 audio_tokens[-1] + 4096,

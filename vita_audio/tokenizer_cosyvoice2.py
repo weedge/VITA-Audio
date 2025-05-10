@@ -83,9 +83,6 @@ class CosyVoice2Tokenizer:
         self.text_audio_interval_ratio = text_audio_interval_ratio
 
     def load_model(self):
-        if hasattr(self, "cosyvoice"):
-            return
-
         logger.info("Loading CosyVoice2Tokenizer")
         from cosyvoice.cli.cosyvoice import CosyVoice, CosyVoice2
         from cosyvoice.utils.file_utils import load_wav
@@ -106,9 +103,6 @@ class CosyVoice2Tokenizer:
         self.load_wav = load_wav
 
     def encode(self, audio_path, **kwargs):
-        if not hasattr(self, "cosyvoice"):
-            self.load_model()
-
         speech_16k = self.load_wav(audio_path, 16000)
 
         try:
@@ -117,16 +111,13 @@ class CosyVoice2Tokenizer:
             )
             speech_token = speech_token[0].cpu().tolist()
         except Exception as error:
-            # logger.info("error", error)
+            print("error", error)
             speech_token = []
         # logger.info(f"speech_token {speech_token}")
 
         return speech_token
 
     def decode(self, prompt_speech_token, source_speech_16k=None):
-        if not hasattr(self, "cosyvoice"):
-            self.load_model()
-
         prompt_speech_token = torch.tensor(prompt_speech_token).unsqueeze(0)
 
         flow_prompt_speech_token = torch.zeros(1, 0, dtype=torch.int32)
