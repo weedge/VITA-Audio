@@ -177,11 +177,11 @@ class SenseVoiceSparkTTSTokenizer:
 
     def apply_to_role(self, role, **kwargs):
         is_discrete = kwargs.get("is_discrete", False)
-        if is_discrete and role in ["assistant", "gpt"]:
+        if is_discrete:
             return True
 
         is_contiguous = kwargs.get("is_contiguous", False)
-        if is_contiguous and role in ["user", "human"]:
+        if is_contiguous and role in ["user", "human"] and self.sense_voice_model_path is not None:
             return True
 
         return False
