@@ -116,11 +116,10 @@ class SenseVoiceSparkTTSTokenizer:
             from sparktts.models.audio_tokenizer import BiCodecTokenizer
             logger.info("Loading BiCodecTokenizer")
 
-            model_dir = "/data/models/SparkAudio/Spark-TTS-0.5B/"
             # import time
             # import random
             # time.sleep(self.rank * 2 + random.randint(3, 9))
-            self.model = BiCodecTokenizer(model_dir, device=self.device)
+            self.model = BiCodecTokenizer(self.spark_tts_model_path, device=self.device)
             logger.info("Loading BiCodecTokenizer Done")
 
     def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
