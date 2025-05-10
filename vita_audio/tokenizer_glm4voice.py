@@ -75,8 +75,8 @@ def update_tokenizer_for_glm4voice(tokenizer):
 
 
 class GLM4VoiceTokenizer:
-    def __init__(self, model_name_or_path, flow_path=None, rank=None):
-        self.model_name_or_path = model_name_or_path
+    def __init__(self, glm4_voice_tokenizer_model_path=None, flow_path=None, rank=None):
+        self.glm4_voice_tokenizer_model_path = glm4_voice_tokenizer_model_path
         self.flow_path = flow_path
 
         if rank is None and torch.distributed.is_initialized():
@@ -111,13 +111,18 @@ class GLM4VoiceTokenizer:
         else:
             self.device = "cpu"
 
-        logger.info(f"{self.device=} Loading GLM4VoiceTokenizer")
-        self.whisper_model = (
-            WhisperVQEncoder.from_pretrained(self.model_name_or_path).eval().to(self.device)
-        )
-        self.feature_extractor = WhisperFeatureExtractor.from_pretrained(self.model_name_or_path)
+        if self.glm4_voice_tokenizer_model_path is not None:
+            logger.info(f"{self.device=} Loading GLM4VoiceTokenizer")
+            self.whisper_model = (
+                WhisperVQEncoder.from_pretrained(
+                    self.glm4_voice_tokenizer_model_path).eval().to(
+                    self.device))
+            self.feature_extractor = WhisperFeatureExtractor.from_pretrained(
+                self.glm4_voice_tokenizer_model_path)
+            logger.info(f"{self.device=} Loading GLM4VoiceTokenizer Done")
 
         if self.flow_path is not None:
+            logger.info(f"{self.device=} Loading GLM4VoiceDecoder")
             flow_config = os.path.join(self.flow_path, "config.yaml")
             flow_checkpoint = os.path.join(self.flow_path, "flow.pt")
             hift_checkpoint = os.path.join(self.flow_path, "hift.pt")
@@ -129,7 +134,7 @@ class GLM4VoiceTokenizer:
                 hift_ckpt_path=hift_checkpoint,
                 device=self.device,
             )
-        logger.info(f"{self.device=} Loading GLM4VoiceTokenizer Done")
+            logger.info(f"{self.device=} Loading GLM4VoiceDecoder Done")
 
     def encode(self, audio_path, **kwargs):
         if not hasattr(self, "whisper_model"):
@@ -203,7 +208,7 @@ def extract_speech_token(model, feature_extractor, utts, device="cuda"):
             audio = audio.cpu().numpy()
             time_step = 0
             while time_step * 16000 < audio.shape[0]:
-                audio_segment = audio[time_step * 16000 : (time_step + 30) * 16000]
+                audio_segment = audio[time_step * 16000: (time_step + 30) * 16000]
                 audios.append(audio_segment)
                 indices.append(idx)
                 time_step += 30
@@ -218,7 +223,7 @@ def extract_speech_token(model, feature_extractor, utts, device="cuda"):
         batch_size = 128
         for start in range(0, len(audios), batch_size):
             features = feature_extractor(
-                audios[start : start + batch_size],
+                audios[start: start + batch_size],
                 sampling_rate=16000,
                 return_attention_mask=True,
                 return_tensors="pt",

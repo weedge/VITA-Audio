@@ -88,7 +88,14 @@ def get_audio_tokenizer(
 
     if model_type == "glm4voice":
         from .tokenizer_glm4voice import GLM4VoiceTokenizer
-        return GLM4VoiceTokenizer(model_name_or_path, flow_path=flow_path, rank=rank)
+        glm4_voice_tokenizer_model_path = kwargs.get(
+            "glm4_voice_tokenizer_model_path",
+            model_name_or_path,
+        )
+        return GLM4VoiceTokenizer(
+            glm4_voice_tokenizer_model_path=glm4_voice_tokenizer_model_path,
+            flow_path=flow_path,
+            rank=rank)
 
     if model_type == "cosyvoice2":
         from .tokenizer_cosyvoice2 import CosyVoice2Tokenizer
