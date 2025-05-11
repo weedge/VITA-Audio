@@ -91,7 +91,7 @@ def get_audio_tokenizer(
         glm4_voice_tokenizer_model_path = kwargs.get(
             "glm4_voice_tokenizer_model_path",
             model_name_or_path,
-        )
+        ) or model_name_or_path
         return GLM4VoiceTokenizer(
             glm4_voice_tokenizer_model_path=glm4_voice_tokenizer_model_path,
             flow_path=flow_path,
@@ -112,7 +112,7 @@ def get_audio_tokenizer(
         spark_tts_model_path = kwargs.get(
             "spark_tts_model_path",
             model_name_or_path,
-        )
+        ) or model_name_or_path
         sense_voice_model_path = kwargs.get(
             "sense_voice_model_path",
             "FunAudioLLM/SenseVoiceSmall",
@@ -130,7 +130,7 @@ def get_audio_tokenizer(
         glm4_voice_tokenizer_model_path = kwargs.get(
             "glm4_voice_tokenizer_model_path",
             model_name_or_path,
-        )
+        ) or model_name_or_path
         sense_voice_model_path = kwargs.get(
             "sense_voice_model_path",
             "FunAudioLLM/SenseVoiceSmall",
