@@ -141,8 +141,7 @@ class GLM4VoiceTokenizer:
         return audio_tokens
 
     def decode(self, audio_tokens, option_steps=10, **kwargs):
-        this_uuid = str(uuid.uuid4())
-        this_uuid = "abc"
+        this_uuid = kwargs.get("session_id","abc") or "abc"
 
         tts_token = torch.tensor(audio_tokens, device=self.device).unsqueeze(0)
 

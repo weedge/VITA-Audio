@@ -154,19 +154,21 @@ class SenseVoiceGLM4VoiceTokenizer:
             )
             logger.info(f"{self.device=} Loading GLM4VoiceDecoder Done")
 
-    def encode(self, audio_path, is_discrete=False, is_contiguous=True, **kwargs):
+    def encode(self, utt, is_discrete=False, is_contiguous=True, **kwargs):
         assert not (is_discrete and is_contiguous)
         assert is_discrete or is_contiguous
 
         if is_discrete:
             audio_tokens = extract_speech_token(
-                self.whisper_model, self.feature_extractor, [audio_path], device=self.device
+                self.whisper_model, self.feature_extractor, [utt], device=self.device
             )[0]
             return audio_tokens
 
         if is_contiguous:
-
-            audio, sample_rate = torchaudio.load(audio_path)
+            if isinstance(utt, tuple):
+                audio, sample_rate = utt
+            else:
+                audio, sample_rate = torchaudio.load(utt)
             audio = audio.mean(0)
             if sample_rate != self.sample_rate:
                 if sample_rate not in _resample_buffer:
@@ -193,8 +195,7 @@ class SenseVoiceGLM4VoiceTokenizer:
             return speech
 
     def decode(self, audio_tokens, option_steps=10, **kwargs):
-        this_uuid = str(uuid.uuid4())
-        this_uuid = "abc"
+        this_uuid = kwargs.get("session_id","abc") or "abc"
 
         tts_token = torch.tensor(audio_tokens, device=self.device).unsqueeze(0)
 
