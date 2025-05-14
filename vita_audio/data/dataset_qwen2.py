@@ -787,10 +787,10 @@ def preprocess(
 
     attention_mask = [1] * len(input_ids)
 
-    # print("sample", sample, flush=True)
-    # print("input_ids", input_ids, flush=True)
-    # print("targets", targets[:100], flush=True)
-    # print("images", [xx.shape for x in images for xx in x], flush=True)
+    print("sample", sample, flush=True)
+    print("input_ids", input_ids, flush=True)
+    print("targets", targets[:100], flush=True)
+    print("images", [xx.shape for x in images for xx in x], flush=True)
 
     return dict(
         input_ids=input_ids,

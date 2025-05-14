@@ -40,7 +40,7 @@ from trainer_v4_48_3 import Trainer
 
 
 import vita_audio.models
-from vita_audio import build_supervised_dataset_deepspeed
+from vita_audio.data.build import build_supervised_dataset_deepspeed
 from vita_audio.tokenizer import update_tokenizer_for_s2s, get_audio_tokenizer
 
 
@@ -626,6 +626,10 @@ def main():
 
     print_grad_status(model)
 
+    print(f"model_config={config}",flush=True)
+    print(f"{model_args=}",flush=True)
+    print(f"{data_args=}",flush=True)
+    print(f"{train_args=}",flush=True)
     # Load data
     lm_datasets = build_supervised_dataset_deepspeed(
         model_config=config,
