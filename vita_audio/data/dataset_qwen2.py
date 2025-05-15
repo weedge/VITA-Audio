@@ -238,8 +238,8 @@ class Qwen2Dataset(BaseDataset):
 
         to_ret["input_ids"] = to_ret["tokens"]
 
-        # print("to_ret[tokens]", to_ret["tokens"])
-        # print("to_ret[labels]", to_ret["labels"])
+        print("to_ret[tokens]", to_ret["tokens"], flush=True)
+        print("to_ret[labels]", to_ret["labels"], flush=True)
 
         return to_ret
 
@@ -789,6 +789,7 @@ def preprocess(
 
     print("sample", sample, flush=True)
     print("input_ids", input_ids, flush=True)
+    print("input_tokens", tokenizer.decode(input_ids), flush=True)
     print("targets", targets[:100], flush=True)
     print("images", [xx.shape for x in images for xx in x], flush=True)
 
