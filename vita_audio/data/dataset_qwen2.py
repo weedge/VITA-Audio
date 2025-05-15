@@ -238,9 +238,6 @@ class Qwen2Dataset(BaseDataset):
 
         to_ret["input_ids"] = to_ret["tokens"]
 
-        print("to_ret[tokens]", to_ret["tokens"], flush=True)
-        print("to_ret[labels]", to_ret["labels"], flush=True)
-
         return to_ret
 
     def is_skip(self):
@@ -335,6 +332,10 @@ class Qwen2Dataset(BaseDataset):
                     self.add_ret(ret, min_ret_key)
 
                 to_ret = self.process_ret(to_ret)
+
+                print("to_ret[tokens]", to_ret["tokens"], flush=True)
+                print("to_ret[labels]", to_ret["labels"], flush=True)
+
 
                 self.show_statistic()
                 return to_ret
