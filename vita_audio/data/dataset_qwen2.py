@@ -333,9 +333,7 @@ class Qwen2Dataset(BaseDataset):
 
                 to_ret = self.process_ret(to_ret)
 
-                print("to_ret[tokens]", to_ret["tokens"], flush=True)
-                print("to_ret[labels]", to_ret["labels"], flush=True)
-
+                print(f"{to_ret=}", flush=True)
 
                 self.show_statistic()
                 return to_ret
