@@ -13,3 +13,18 @@
     "/assets/介绍一下上海.wav"
   ]
 }
+{
+  "messages": [
+    {
+      "content": "Convert the speech to text.\n<|audio|>",
+      "role": "user"
+    },
+    {
+      "content": "介绍一下上海",
+      "role": "assistant"
+    }
+  ],
+  "audios": [
+    "/assets/介绍一下上海.wav"
+  ]
+}
