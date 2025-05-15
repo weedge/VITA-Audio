@@ -5,6 +5,7 @@ dataset:
     ratio: 1.0
     num: 200000
     data_paths:
+      - /VITA-Audio/asset/text_chat.jsonl
       - /VITA-Audio/asset/asr.jsonl
       - /VITA-Audio/asset/tts.jsonl
       - /VITA-Audio/asset/sts.jsonl
