@@ -629,7 +629,7 @@ def main():
     print(f"model_config={config}",flush=True)
     print(f"{model_args=}",flush=True)
     print(f"{data_args=}",flush=True)
-    print(f"{train_args=}",flush=True)
+    print(f"{training_args=}",flush=True)
     # Load data
     lm_datasets = build_supervised_dataset_deepspeed(
         model_config=config,
