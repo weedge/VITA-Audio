@@ -334,9 +334,9 @@ class Qwen2Dataset(BaseDataset):
                     to_ret = {}
                     self.add_ret(ret, min_ret_key)
 
-                print(f"{index=} {self.ret=}", flush=True)
+                # print(f"{index=} {self.ret=}", flush=True)
                 if "tokens" not in to_ret or len(to_ret["tokens"]) == 0:
-                    to_ret = self.ret
+                    to_ret = self.ret.pop(max_ret_key)
                 to_ret = self.process_ret(to_ret)
 
                 print(f"{index=} {to_ret=}", flush=True)
