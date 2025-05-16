@@ -217,8 +217,8 @@ class BaseDataset(torch.utils.data.Dataset):
                 sampled_data[data_path]["total_num"] = total_num
                 sampled_data[data_path]["used_num"] = used_num
 
-                logger.info(f"this_data {this_data}")
-                logger.info(f"raw_data {raw_data}")
+                logger.info(f"{data_path} this_data {this_data}")
+                logger.info(f"{data_path} raw_data {raw_data}")
                 # logger.info(f"raw_data {raw_data[0]}")
                 # logger.info(f"raw_data {raw_data[-1]}")
                 logger.info(f"Successful load {data_path}")

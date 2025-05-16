@@ -26,7 +26,7 @@ class AudioProcessor:
 
         self.text_audio_interval_ratio = text_audio_interval_ratio
 
-        # self.load_model()
+        self.load_model()
 
     def load_model(self):
         if self.audio_tokenizer is not None:

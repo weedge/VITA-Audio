@@ -265,7 +265,7 @@ class Qwen2Dataset(BaseDataset):
 
     def __getitem__(self, index):
 
-        self.processor["audio"].load_model()
+        # self.processor["audio"].load_model()
 
         while True:
             # if True:
@@ -275,6 +275,7 @@ class Qwen2Dataset(BaseDataset):
                     return {}
 
                 sample = self.raw_data[index]
+                print(f"{sample=}", flush=True)
 
                 if self.cross_dataset_joint:
                     is_empty = False
@@ -286,6 +287,7 @@ class Qwen2Dataset(BaseDataset):
                     ) = self.get_max_min_ret_length()
                 else:
                     source = sample["source"]
+                    print(f"{source=}",flush=True)
                     is_empty = self.maybe_init_ret(source)
 
                     max_ret_lengh = min_ret_lengh = len(self.ret[source]["tokens"])
