@@ -275,7 +275,6 @@ class Qwen2Dataset(BaseDataset):
                     return {}
 
                 sample = self.raw_data[index]
-                print(f"{sample=}", flush=True)
 
                 if self.cross_dataset_joint:
                     is_empty = False
@@ -292,6 +291,8 @@ class Qwen2Dataset(BaseDataset):
 
                     max_ret_lengh = min_ret_lengh = len(self.ret[source]["tokens"])
                     max_ret_key = min_ret_key = source
+
+                print(f"{max_ret_key=} {min_ret_key=} {max_ret_lengh=} {min_ret_lengh=}",flush=True)
 
                 is_begin = is_empty or self.reset_position_ids or self.reset_attention_mask
 
@@ -333,9 +334,12 @@ class Qwen2Dataset(BaseDataset):
                     to_ret = {}
                     self.add_ret(ret, min_ret_key)
 
+                print(f"{index=} {self.ret=}", flush=True)
+                if "tokens" not in to_ret or len(to_ret["tokens"]) == 0:
+                    to_ret = self.ret
                 to_ret = self.process_ret(to_ret)
 
-                print(f"{to_ret=}", flush=True)
+                print(f"{index=} {to_ret=}", flush=True)
 
                 self.show_statistic()
                 return to_ret
