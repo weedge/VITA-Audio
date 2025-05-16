@@ -339,7 +339,8 @@ class Qwen2Dataset(BaseDataset):
                     to_ret = self.ret.pop(max_ret_key)
                 to_ret = self.process_ret(to_ret)
 
-                print(f"{index=} {to_ret=}", flush=True)
+                for key, value in to_ret.items():
+                    print(f"{index=} {key=} {value.shape=}", flush=True)
 
                 self.show_statistic()
                 return to_ret
