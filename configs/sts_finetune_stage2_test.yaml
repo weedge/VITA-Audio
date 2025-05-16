@@ -2,9 +2,10 @@ xlsx_sample_num: 5
 
 dataset:
   test:
-    ratio: 1.0
-    num: 6
+    ratio: 0.5
+    num: 8
     data_paths:
       - /VITA-Audio/asset/text_chat.jsonl
       - /VITA-Audio/asset/asr.jsonl
       - /VITA-Audio/asset/tts.jsonl
+      - /VITA-Audio/asset/sts.jsonl
