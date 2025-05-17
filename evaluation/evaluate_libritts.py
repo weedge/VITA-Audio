@@ -106,6 +106,7 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
+@torch.no_grad()
 def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_model):
 
     audio_offset = tokenizer.convert_tokens_to_ids("<|audio_0|>")
@@ -172,11 +173,10 @@ def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_mod
     return outputs
 
 
-def load_asr_model():
+def load_asr_model(rankj):
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
-    rank = torch.distributed.get_rank()
     device = f"cuda:{rank}"
     torch_dtype = torch.float16
 
@@ -321,7 +321,7 @@ if __name__ == "__main__":
     if model.config.model_type == "hunyuan":
         model.generation_config.eos_token_id = tokenizer.eos_id
 
-    asr_model = load_asr_model()
+    asr_model = load_asr_model(rank)
 
     # ================================================================
     print("Loading data")

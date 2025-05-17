@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "content": "Convert the text to speech.\n介绍一下上海。",
+      "role": "user"
+    },
+    {
+      "content": "<|audio|>",
+      "role": "assistant"
+    }
+  ],
+  "audios": [
+    "/assets/介绍一下上海.wav"
+  ]
+}
