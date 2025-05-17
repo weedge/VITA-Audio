@@ -98,9 +98,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/llama-questions/
 
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/llama-questions/test_hyp_ref_text.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/llama-questions/test_hyp_ref_text.json
 	echo "copypaste ACC: ${JSON_PATH}"
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/llama-questions/test_hyp_ref_speech.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/llama-questions/test_hyp_ref_speech.json
 	echo "copypaste ACC: ${JSON_PATH}"
 
 
@@ -113,9 +113,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/trivia_qa-audio/
 
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/trivia_qa-audio/validation_hyp_ref_text.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/trivia_qa-audio/validation_hyp_ref_text.json
 	echo "copypaste ACC: ${JSON_PATH}"
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/trivia_qa-audio/validation_hyp_ref_speech.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/trivia_qa-audio/validation_hyp_ref_speech.json
 	echo "copypaste ACC: ${JSON_PATH}"
 
 
@@ -128,9 +128,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/spoken-web-questions/
 
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/spoken-web-questions/test_hyp_ref_text.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/spoken-web-questions/test_hyp_ref_text.json
 	echo "copypaste ACC: ${JSON_PATH}"
-	python evaluation/compute-acc-of-contain.py ${OUTPUT_DIR}/spoken-web-questions/test_hyp_ref_speech.json
+	python evaluation/compute_acc_of_contain.py ${OUTPUT_DIR}/spoken-web-questions/test_hyp_ref_speech.json
 	echo "copypaste ACC: ${JSON_PATH}"
 
 fi
@@ -150,9 +150,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/librispeech_asr/
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.clean_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.clean_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.clean_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.clean_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 	JSON_PATH=${ROOT_PATH}/data/jsonl/fixie-ai/librispeech_asr/validation.other.jsonl
@@ -165,9 +165,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/librispeech_asr/
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.other_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.other_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.other_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/validation.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/validation.other_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 
@@ -181,9 +181,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/librispeech_asr/
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.clean_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.clean_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.clean_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.clean_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.clean_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 	JSON_PATH=${ROOT_PATH}/data/jsonl/fixie-ai/librispeech_asr/test.other.jsonl
@@ -196,9 +196,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/librispeech_asr/
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.other_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.other_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.other_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/librispeech_asr/test.other_ref.txt ${OUTPUT_DIR}/librispeech_asr/test.other_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 fi
@@ -217,9 +217,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/wenetspeech/
 
-	python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_hyp.txt
+	python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_hyp.txt
 	echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_MEETING_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 	JSON_PATH=${ROOT_PATH}/data/jsonl/wenet-e2e/wenetspeech/TEST_NET.jsonl
@@ -231,9 +231,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/wenetspeech/
 
-	python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_NET_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_NET_hyp.txt
+	python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_NET_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_NET_hyp.txt
 	echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_NET_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_NET_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/wenetspeech/TEST_NET_ref.txt ${OUTPUT_DIR}/wenetspeech/TEST_NET_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 fi
 
@@ -252,9 +252,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/AISHELL-1/
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/AISHELL-1/_test.clean_ref.txt ${OUTPUT_DIR}/AISHELL-1/test.clean_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/AISHELL-1/_test.clean_ref.txt ${OUTPUT_DIR}/AISHELL-1/test.clean_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/AISHELL-1/test_ref.txt ${OUTPUT_DIR}/AISHELL-1/test_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/AISHELL-1/test_ref.txt ${OUTPUT_DIR}/AISHELL-1/test_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 
 
@@ -274,9 +274,9 @@ then
 		--flow_path ${FLOW_PATH} \
 		--output_dir ${OUTPUT_DIR}/libritts/ \
 
-	#python evaluation/compute-cer.py --char=1 --v=1 ${OUTPUT_DIR}/libritts/test.clean_ref.txt ${OUTPUT_DIR}/libritts/test.clean_hyp.txt
+	#python evaluation/compute_cer.py --char=1 --v=1 ${OUTPUT_DIR}/libritts/test.clean_ref.txt ${OUTPUT_DIR}/libritts/test.clean_hyp.txt
 	#echo "copypaste CER: ${JSON_PATH}"
-	python evaluation/compute-wer.py --char=1 --v=1 ${OUTPUT_DIR}/libritts/test.clean_ref.txt ${OUTPUT_DIR}/libritts/test.clean_hyp.txt
+	python evaluation/compute_wer.py --char=1 --v=1 ${OUTPUT_DIR}/libritts/test.clean_ref.txt ${OUTPUT_DIR}/libritts/test.clean_hyp.txt
 	echo "copypaste WER: ${JSON_PATH}"
 fi
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import re, sys, unicodedata
+import sys
+import unicodedata
 import codecs
 
 remove_tag = True
@@ -21,7 +22,7 @@ def characterize(string):
             i += 1
             continue
         cat1 = unicodedata.category(char)
-        #https://unicodebook.readthedocs.io/unicode.html#unicode-categories
+        # https://unicodebook.readthedocs.io/unicode.html#unicode-categories
         if cat1 == 'Zs' or cat1 == 'Cn' or char in spacelist:  # space or not assigned
             i += 1
             continue
@@ -31,7 +32,8 @@ def characterize(string):
         else:
             # some input looks like: <unk><noise>, we want to separate it to two words.
             sep = ' '
-            if char == '<': sep = '>'
+            if char == '<':
+                sep = '>'
             j = i + 1
             while j < len(string):
                 c = string[j]
@@ -46,7 +48,8 @@ def characterize(string):
 
 
 def stripoff_tags(x):
-    if not x: return ''
+    if not x:
+        return ''
     chars = []
     i = 0
     T = len(x)
@@ -77,6 +80,9 @@ def normalize(sentence, ignore_words, cs, split=None):
             continue
         if split and x in split:
             new_sentence += split[x]
+        if x.isalnum():
+            for k in x:
+                new_sentence.append(k)
         else:
             new_sentence.append(x)
     return new_sentence
@@ -210,9 +216,10 @@ class Calculator:
             elif self.space[i][j]['error'] == 'non':  # starting point
                 break
             else:  # shouldn't reach here
-                print(
-                    'this should not happen , i = {i} , j = {j} , error = {error}'
-                    .format(i=i, j=j, error=self.space[i][j]['error']))
+                print('this should not happen , i={i} , j={j} , \
+                      error={error}'.format(i=i,
+                                            j=j,
+                                            error=self.space[i][j]['error']))
         return result
 
     def overall(self):
@@ -285,12 +292,11 @@ def default_cluster(word):
 
 
 def usage():
-    print(
-        "compute-wer.py : compute word error rate (WER) and align recognition results and references."
-    )
-    print(
-        "         usage : python compute-wer.py [--cs={0,1}] [--cluster=foo] [--ig=ignore_file] [--char={0,1}] [--v={0,1}] [--padding-symbol={space,underline}] test.ref test.hyp > test.wer"
-    )
+    print("compute_wer.py : compute word error rate (WER) \
+          and align recognition results and references.")
+    print("         usage : python compute_wer.py [--cs={0,1}] \
+          [--cluster=foo] [--ig=ignore_file] [--char={0,1}] [--v={0,1}] \
+          [--padding-symbol={space,underline}] test.ref test.hyp > test.wer")
 
 
 if __name__ == '__main__':
@@ -364,7 +370,7 @@ if __name__ == '__main__':
             verbose = 0
             try:
                 verbose = int(b)
-            except:
+            except Exception:
                 if b == 'true' or b != '0':
                     verbose = 1
             continue
@@ -378,7 +384,7 @@ if __name__ == '__main__':
                 padding_symbol = '_'
             continue
         if True or sys.argv[1].startswith('-'):
-            #ignore invalid switch
+            # ignore invalid switch
             del sys.argv[1]
             continue
 
@@ -407,7 +413,8 @@ if __name__ == '__main__':
                 array = characterize(line)
             else:
                 array = line.strip().split()
-            if len(array) == 0: continue
+            if len(array) == 0:
+                continue
             fid = array[0]
             rec_set[fid] = normalize(array[1:], ignore_words, case_sensitive,
                                      split)
@@ -418,7 +425,8 @@ if __name__ == '__main__':
             array = characterize(line)
         else:
             array = line.rstrip('\n').split()
-        if len(array) == 0: continue
+        if len(array) == 0:
+            continue
         fid = array[0]
         if fid not in rec_set:
             continue
@@ -488,9 +496,8 @@ if __name__ == '__main__':
                 rec1 = rec2
 
     if verbose:
-        print(
-            '==========================================================================='
-        )
+        print('==================================================='
+              '========================')
         print()
 
     result = calculator.overall()
@@ -508,8 +515,8 @@ if __name__ == '__main__':
 
     if verbose:
         for cluster_id in default_clusters:
-            result = calculator.cluster(
-                [k for k in default_clusters[cluster_id]])
+            result = calculator.cluster(k
+                                        for k in default_clusters[cluster_id])
             if result['all'] != 0:
                 wer = float(result['ins'] + result['sub'] +
                             result['del']) * 100.0 / result['all']
@@ -525,7 +532,7 @@ if __name__ == '__main__':
             for line in open(cluster_file, 'r', encoding='utf-8'):
                 for token in line.decode('utf-8').rstrip('\n').split():
                     # end of cluster reached, like </Keyword>
-                    if token[0:2] == '</' and token[len(token)-1] == '>' and \
+                    if token[0:2] == '</' and token[len(token) - 1] == '>' and \
                        token.lstrip('</').rstrip('>') == cluster_id :
                         result = calculator.cluster(cluster)
                         if result['all'] != 0:
@@ -540,14 +547,13 @@ if __name__ == '__main__':
                         cluster_id = ''
                         cluster = []
                     # begin of cluster reached, like <Keyword>
-                    elif token[0] == '<' and token[len(token)-1] == '>' and \
-                         cluster_id == '' :
+                    elif (token[0] == '<' and token[len(token) - 1] == '>'
+                          and cluster_id == ''):
                         cluster_id = token.lstrip('<').rstrip('>')
                         cluster = []
                     # general terms, like WEATHER / CAR / ...
                     else:
                         cluster.append(token)
         print()
-        print(
-            '==========================================================================='
-        )
+        print('======================================='
+              '====================================')
