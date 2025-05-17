@@ -33,10 +33,7 @@ def clean_punctuation(value):
     return value
 
 
-if __name__ == "__main__":
-
-    pred_gt_json_file = sys.argv[1]
-
+def evaluate(pred_gt_json_file, verbose=False):
     with open(pred_gt_json_file, "r") as f:
         pred_gt = json.load(f)
 
@@ -69,17 +66,27 @@ if __name__ == "__main__":
         elif is_list_in_string(pred, gt_number):
             acc += 1
         else:
-            print("======================================================")
-            print(f"{line[0]=}")
-            print(f"{line[1]=}")
+            if verbose:
+                print("=============no acc===============")
+                print(f"{line[0]=}")
+                print(f"{line[1]=}")
 
-    print("======================================================")
-    print(f"{acc=}")
-    print(f"{len(pred_gt)=}")
-    print("======================================================")
+    if verbose:
+        print("======================================================")
+        print(f"{acc=}")
+        print(f"{len(pred_gt)=}")
+        print("======================================================")
 
     acc = acc / len(pred_gt) * 100
 
-    print("======================================================")
-    print(f"{acc=}")
-    print("======================================================")
+    if verbose:
+        print("======================================================")
+        print(f"{acc=}")
+        print("======================================================")
+
+    return acc
+
+
+if __name__ == "__main__":
+    pred_gt_json_file = sys.argv[1]
+    evaluate(pred_gt_json_file)
