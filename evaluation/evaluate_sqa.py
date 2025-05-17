@@ -120,7 +120,7 @@ class STSDataset(torch.utils.data.Dataset):
         filename = os.path.splitext(filename)[0]
 
         return {
-            "input_ids": input_ids,
+            "input_ids": input_ids.detach(),
             "audios": audios,
             "audio_indices": audio_indices,
             "ref": ref,
