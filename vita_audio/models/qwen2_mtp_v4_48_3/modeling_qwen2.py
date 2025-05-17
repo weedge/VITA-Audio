@@ -991,8 +991,8 @@ class Qwen2MTPForCausalLM(Qwen2PreTrainedModel, GenerationMixin):
                 else:
                     pass
 
-            # if True:
-            if False:
+            if True:
+            # if False:
                 print("=" * 100)
                 print(f"{self.mtp_idx=}")
                 print(f"{self.num_prefill_tokens=}")
@@ -1027,8 +1027,8 @@ class Qwen2MTPForCausalLM(Qwen2PreTrainedModel, GenerationMixin):
                     position_ids = self.position_ids[:, num_seen_tokens + self.mtp_idx + 1:]
                 attention_mask = self.attention_mask[:, num_seen_tokens + self.mtp_idx + 1:]
 
-                if False:
-                # if True:
+                # if False:
+                if True:
                     print("=" * 100)
                     print(f"{self.mtp_idx=}")
                     print(f"{layer_idx=}")
