@@ -173,7 +173,7 @@ def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_mod
     return outputs
 
 
-def load_asr_model(rankj):
+def load_asr_model(rank):
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
