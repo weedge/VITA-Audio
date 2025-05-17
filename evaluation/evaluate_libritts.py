@@ -290,6 +290,7 @@ if __name__ == "__main__":
     audio_tokenizer = get_audio_tokenizer(
         args.audio_tokenizer_path, args.audio_tokenizer_type, flow_path=args.flow_path, rank=rank
     )
+    audio_tokenizer.load_model()
 
     tokenizer = AutoTokenizer.from_pretrained(
         args.model_name_or_path,

@@ -92,7 +92,6 @@ def get_audio_tokenizer(
             "glm4_voice_tokenizer_model_path",
             model_name_or_path,
         ) or model_name_or_path
-        print(f"{glm4_voice_tokenizer_model_path=},{flow_path=},{rank=}",flush=True)
         return GLM4VoiceTokenizer(
             glm4_voice_tokenizer_model_path=glm4_voice_tokenizer_model_path,
             flow_path=flow_path,
