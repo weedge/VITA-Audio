@@ -153,6 +153,7 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
+@torch.no_grad()
 def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_model):
 
     audio_offset = tokenizer.convert_tokens_to_ids("<|audio_0|>")
