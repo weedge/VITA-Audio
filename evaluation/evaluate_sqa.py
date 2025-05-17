@@ -196,7 +196,7 @@ def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_mod
             tts_speech = audio_tokenizer.decode(audio_tokens)
 
             wav_dir = os.path.join(output_dir, "audio")
-            wav_path = os.path.join(wav_dir, filename + ".wav")
+            wav_path = os.path.join(wav_dir,"sts_" + filename + ".wav")
             os.makedirs(os.path.dirname(wav_path), exist_ok=True)
             torchaudio.save(wav_path, tts_speech.unsqueeze(0), 22050, format="wav")
 
