@@ -10,6 +10,7 @@ from functools import partial
 from pathlib import Path
 
 import torch
+torch.multiprocessing.set_start_method('spawn')
 import tqdm
 from datasets import load_dataset
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
