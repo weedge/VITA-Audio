@@ -217,13 +217,13 @@ def inference(model, tokenizer, audio_tokenizer, dataloader, output_dir, asr_mod
     return outputs
 
 
-def load_asr_model():
+def load_asr_model(rank):
+    """https://huggingface.co/openai/whisper-large-v3"""
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
-    rank = torch.distributed.get_rank()
     device = f"cuda:{rank}"
-    torch_dtype = torch.float16
+    torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
     model_id = "/data/models/openai/whisper-large-v3"
 
@@ -376,7 +376,7 @@ if __name__ == "__main__":
     if model.config.model_type == "hunyuan":
         model.generation_config.eos_token_id = tokenizer.eos_id
 
-    asr_model = load_asr_model()
+    asr_model = load_asr_model(rank)
 
     # ================================================================
     print("Loading data")
