@@ -73,6 +73,7 @@ class TTSDataset(torch.utils.data.Dataset):
 
         filepath = sample["audios"][0]
         filename = os.path.basename(filepath)
+        filename = os.path.splitext(filename)[0]
 
         return {
             "input_ids": input_ids,
@@ -178,7 +179,7 @@ def load_asr_model(rank):
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
     device = f"cuda:{rank}"
-    torch_dtype = torch.float16
+    torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
     model_id = "/data/models/openai/whisper-large-v3"
 
