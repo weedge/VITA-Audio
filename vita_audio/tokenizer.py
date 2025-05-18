@@ -133,7 +133,7 @@ def get_audio_tokenizer(
         ) or model_name_or_path
         sense_voice_model_path = kwargs.get(
             "sense_voice_model_path",
-            "FunAudioLLM/SenseVoiceSmall",
+            "/data/models/FunAudioLLM/SenseVoiceSmall",
         )
         return SenseVoiceGLM4VoiceTokenizer(
             glm4_voice_tokenizer_model_path=glm4_voice_tokenizer_model_path,
